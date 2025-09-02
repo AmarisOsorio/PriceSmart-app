@@ -10,8 +10,8 @@ productsController.getProducts = async (req, res) => {
 
 // INSERT
 productsController.createProducts = async (req, res) => {
-  const { name, description, price , stock } = req.body;
-  const newProduct = new productsModel({ name, description, price, stock});
+  const { name, desciption, price , stock } = req.body;
+  const newProduct = new productsModel({ name, desciption, price, stock});
   await newProduct.save();
   res.json({ message: "product saved" });
 };
@@ -29,7 +29,7 @@ productsController.deleteProducts = async (req, res) => {
 // UPDATE
 productsController.updateProducts = async (req, res) => {
   // Solicito todos los valores
-  const { name, description, price } = req.body;
+  const { name, description, price, stock } = req.body;
   // Actualizo
   await productsModel.findByIdAndUpdate(
     req.params.id,
