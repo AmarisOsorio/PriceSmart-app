@@ -95,15 +95,21 @@ loginController.login = async (req, res) => {
       //2- Clave secreta
       config.JWT.secret,
       //3- Cuando expira
-      { expiresIn: config.JWT.expiresIn }
+      { expiresIn: config.JWT.expiresIn },
+
+      (error, token) => {
+        if(error) console.log(error);
+        res.cookie("authToken", token, {
+          maxAge: 24 * 60 * 60 * 1000,
+          path: "/",
+          sameSite: "lax",
+        });
+        res.json({ message: "login successful" });
+      }
+
     );
 
-    res.cookie("authToken", token, {
-      maxAge: 24 * 60 * 60 * 1000,
-      path: "/",
-      sameSite: "lax",
-    });
-    res.json({ message: "login successful" });
+    
   } catch (error) {
     console.log(error);
   }
